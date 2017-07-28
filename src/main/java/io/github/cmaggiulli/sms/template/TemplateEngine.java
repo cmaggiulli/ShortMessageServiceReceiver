@@ -18,7 +18,7 @@ import org.apache.velocity.VelocityContext;
 public class TemplateEngine {
 	private static final Logger LOG = (Logger) LogManager.getLogger(TemplateEngine.class);
 
-	private static void init() throws Exception {
+	public static void init() throws Exception {
 		Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
 		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		Velocity.init();

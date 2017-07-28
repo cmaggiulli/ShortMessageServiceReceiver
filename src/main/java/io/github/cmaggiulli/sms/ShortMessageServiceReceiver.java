@@ -14,6 +14,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+import io.github.cmaggiulli.sms.template.TemplateEngine;
 import io.github.cmaggiulli.sms.util.Properties;
 
 /**
@@ -33,10 +34,7 @@ public class ShortMessageServiceReceiver {
 	public static void main(String[] args) throws Exception {
 		Channel channel = ShortMessageServiceReceiver.connection().createChannel();
 		channel.queueDeclare(QUEUE, true, false, false, null);
-
-		Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-		Velocity.init();
+		TemplateEngine.init();
 		
 		channel.basicConsume(QUEUE, false, new ShortMessageServiceConsumer(channel));
 	}
