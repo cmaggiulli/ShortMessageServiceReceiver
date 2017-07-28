@@ -1,5 +1,7 @@
 # About
-**ShortMessageServiceReceiver** is an RabbitMQ messaging consumer written in Java.  When a executable jar is created and ran as a process this application will consume messages from the *ShortMessageService* queue.  Once the application's consumer pops a message off the queue it will then populate and post an XML Velocity template to the 2sms service which will trigger an SMS to be sent. This consumer is a module component of a larger system.  In the full system a Liferay OSGi module first publishes a message to the *ShortMessageService* using Spring AMQP before being consumed by this receiver.
+**ShortMessageServiceReceiver** is an AMQP messaging queue receiver written in Java for RabbitMQ.  This application builds as an executable jar and is ran as a system process.  While running as a process the consumer will pop messages off the *ShortMessageService* queue, read the message data, populate an Velocity template, and then post an XML SOAP request (the velocity template) to the 2sms service. 
+
+Although this receiver is a modular, self contained component that can be used in any AMQP system, it was originally designed to be part of a larger messaging sytem.  In the full system a OSGi module (Liferay) first publishes a message to the *ShortMessageService* using Spring AMQP.  This receiver was then meant to consume those messages.
 
 # Environment
 This application was developed for the following environment
