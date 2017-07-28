@@ -33,15 +33,14 @@ public class TwoSMSClient {
 		return instance;
 	}
 	
-	public void send(String messageRequest, String messageId) throws Exception {
-		LOG.info("Sending message " + messageId);
+	public void send(String template) throws Exception {
 		URL url = new URL("http://www.2sms.com/xml/xml.jsp");
 		
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
         
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-        writer.write(messageRequest);
+        writer.write(template);
         writer.flush();
         writer.close();
 
@@ -49,9 +48,7 @@ public class TwoSMSClient {
 	}
 	
 	private void response(URLConnection connection) throws ParserConfigurationException, SAXException, IOException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(connection.getInputStream());
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(connection.getInputStream());
         
         LOG.info(document.toString());
 	}

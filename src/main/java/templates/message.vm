@@ -1,0 +1,17 @@
+<Request>
+   <Identification>
+      <UserID>guest</UserID>
+      <Password>guest</Password>
+   </Identification>
+   <Service>
+      <ServiceName>SendMessage</ServiceName>
+      <ServiceDetail>
+         <CombiMessage>
+            <CombiList>
+               <Individual type='sms'>15188525171</Individual>
+            </CombiList>
+            <Text>$body</Text>
+         </CombiMessage>
+      </ServiceDetail>
+   </Service>
+</Request>

@@ -6,6 +6,9 @@ import java.util.concurrent.TimeoutException;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -25,16 +28,16 @@ public class ShortMessageServiceReceiver {
 	/**
 	 * 
 	 * @param args
-	 * @throws IOException
-	 * @throws TimeoutException
-	 * @throws ConfigurationException
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws IOException, TimeoutException, ConfigurationException {
-		Connection connection = ShortMessageServiceReceiver.connect();
-
-		Channel channel = connection.createChannel();
+	public static void main(String[] args) throws Exception {
+		Channel channel = ShortMessageServiceReceiver.connection().createChannel();
 		channel.queueDeclare(QUEUE, true, false, false, null);
 
+		Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		Velocity.init();
+		
 		channel.basicConsume(QUEUE, false, new ShortMessageServiceConsumer(channel));
 	}
 
@@ -45,7 +48,7 @@ public class ShortMessageServiceReceiver {
 	 * @throws TimeoutException
 	 * @throws ConfigurationException
 	 */
-	public static Connection connect() throws IOException, TimeoutException, ConfigurationException {		
+	public static Connection connection() throws IOException, TimeoutException, ConfigurationException {		
 		final ConnectionFactory factory = new ConnectionFactory();
 		
 		factory.setUsername(Properties.getRabbitUser());

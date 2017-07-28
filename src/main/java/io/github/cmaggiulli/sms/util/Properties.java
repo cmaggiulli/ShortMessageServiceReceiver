@@ -7,6 +7,7 @@ import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import org.apache.commons.beanutils.*;
 
 public class Properties {
 	private static final Logger LOG = (Logger) LogManager.getLogger(Properties.class);
@@ -18,13 +19,13 @@ public class Properties {
 		configurations = new Configurations();
 		
 		try {
-			propertiesConfiguration = configurations.properties(new File("configuration.properties"));
+			propertiesConfiguration = configurations.properties(new File("../configuration.properties"));
 		} catch (ConfigurationException e) {
 			LOG.error("Cannot read from configuration.properties file");
 			System.exit(0);
 		}
 	}
-	public static String test = "";
+	
 	public static final String getRabbitUser() {
 		return propertiesConfiguration.getString("mq.user");
 	}
