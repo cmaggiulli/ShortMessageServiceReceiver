@@ -35,6 +35,9 @@ public class ShortMessageServiceConsumer extends DefaultConsumer {
 			getChannel().basicAck(envelope.getDeliveryTag(), true);
 		} catch(Exception e) {
 			getChannel().basicAck(envelope.getDeliveryTag(), false);
+			System.exit(1);
 		}
+		
+		System.exit(0);
 	}
 }

@@ -1,9 +1,7 @@
 package io.github.cmaggiulli.sms.template;
 import java.io.StringWriter;
-import java.util.Properties;
 
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeConstants;
@@ -19,6 +17,10 @@ public class TemplateEngine {
 	private static final Logger LOG = (Logger) LogManager.getLogger(TemplateEngine.class);
 	
 	static {
+		init();
+	}
+	
+	private static void init() {
 		Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
 		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		
@@ -26,7 +28,7 @@ public class TemplateEngine {
 			Velocity.init();
 		} catch (Exception e) {
 			LOG.error("Error creating velocity context");
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 	
