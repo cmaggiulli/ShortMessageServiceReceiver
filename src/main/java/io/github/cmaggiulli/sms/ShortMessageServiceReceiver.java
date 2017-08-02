@@ -34,7 +34,6 @@ public class ShortMessageServiceReceiver {
 	public static void main(String[] args) throws Exception {
 		Channel channel = ShortMessageServiceReceiver.connection().createChannel();
 		channel.queueDeclare(QUEUE, true, false, false, null);
-		TemplateEngine.init();
 		
 		channel.basicConsume(QUEUE, false, new ShortMessageServiceConsumer(channel));
 	}

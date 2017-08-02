@@ -17,11 +17,17 @@ import org.apache.velocity.VelocityContext;
 
 public class TemplateEngine {
 	private static final Logger LOG = (Logger) LogManager.getLogger(TemplateEngine.class);
-
-	public static void init() throws Exception {
+	
+	static {
 		Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
 		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-		Velocity.init();
+		
+		try {
+			Velocity.init();
+		} catch (Exception e) {
+			LOG.error("Error creating velocity context");
+			System.exit(0);
+		}
 	}
 	
 	public static String getTemplate(String json) throws ResourceNotFoundException, ParseErrorException, Exception {
